@@ -9,7 +9,7 @@ const Cursor = () => (
     primitive="a-cursor"
     id="camera-cursor"
     cursor="rayOrigin: mouse"
-    raycaster="far: 1000; interval: 100; objects: .portal">
+    raycaster="far: 10000; interval: 100; objects: .portal">
   </Entity>
 )
 export default Cursor
