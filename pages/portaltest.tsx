@@ -6,17 +6,19 @@ import Environment from '../components/xr/scene/environment'
 import Portal from '../components/xr/portal/Portal'
 import Cursor from '../components/xr/portal/Cursor'
 // import Login from '../components/ui/Login'
-
-export default class IndexPage extends React.Component {
+type Props = {
+  aframeReady: boolean,
+}
+export default class PortalTestPage extends React.Component<Props> {
   render() {
     return (
       <Layout pageTitle="Portal test">
         {/* <Login /> */}
-        <SceneRoot>
+        {this.props.aframeReady && (<SceneRoot>
           <Cursor/>
           <Environment/>
           <Portal href="/portals" position={{ x: 0, y: 1, z: -3 }}/>
-        </SceneRoot>
+        </SceneRoot>)}
       </Layout>
     )
   }

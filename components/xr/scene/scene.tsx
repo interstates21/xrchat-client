@@ -16,48 +16,36 @@ type Props = {
 }
 
 type State = {
-  appRendered?: boolean
   color?: string
 }
 
 export default class NetworkedScene extends React.Component<Props> {
   state: State = {
-    appRendered: false,
     color: 'red'
-  }
-
-  componentDidMount() {
-    if (typeof window !== 'undefined') {
-      require('aframe')
-      // require('networked-aframe')
-      this.setState({ appRendered: true })
-    }
   }
 
   render() {
     return (
       <div style={{ height: '100%', width: '100%' }}>
-        {this.state.appRendered && (
-          <Scene
-            vr-mode-ui="enterVRButton: #enterVRButton"
-            // networked-scene={config}
-            class="scene"
-            renderer="antialias: true"
-            background="color: #FAFAFA"
-          >
-            <AframeComponentRegisterer/>
-            <Entity position="0 0.6 0">
-              <Grid />
-            </Entity>
-            <Assets />
-            <Player
-              fuseCursor="true" />
-            {this.props.children}
-            <a className="enterVR" id="enterVRButton" href="#">
-              <SvgVr className="enterVR" />
-            </a>
-          </Scene>
-        )}
+        <Scene
+          vr-mode-ui="enterVRButton: #enterVRButton"
+          // networked-scene={config}
+          class="scene"
+          renderer="antialias: true"
+          background="color: #FAFAFA"
+        >
+          <AframeComponentRegisterer/>
+          <Entity position="0 0.6 0">
+            <Grid />
+          </Entity>
+          <Assets />
+          <Player
+            fuseCursor="true" />
+          {this.props.children}
+          <a className="enterVR" id="enterVRButton" href="#">
+            <SvgVr className="enterVR" />
+          </a>
+        </Scene>
       </div>
     )
   }

@@ -1,10 +1,14 @@
 import Scene from '../components/xr/scene/scene-video-grid'
 import React from 'react'
 
-export default class MediaGridPage extends React.Component {
+type Props = {
+  aframeReady: boolean,
+}
+
+export default class MediaGridPage extends React.Component<Props> {
   render () {
     return (
-      <Scene />
+      this.props.aframeReady && (<Scene />)
     )
   }
 }
