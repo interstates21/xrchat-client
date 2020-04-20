@@ -58,3 +58,4 @@ declare module '*.jpg' {
       config: { init: CbFunction; [key: string]: CbFunction }
     ) => void
   }
+  declare module 'aframe-react'; //now we can import { Entity } from 'aframe-react' etc. without ts error
