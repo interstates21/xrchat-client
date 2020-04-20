@@ -2,18 +2,12 @@ import React from 'react'
 // @ts-ignore
 import { Entity, Scene } from 'aframe-react'
 
-export default class AframeWindow extends React.Component {
+type Props = {
+  aframeReady: boolean,
+}
+export default class AframeWindow extends React.Component<Props> {
   state = {
-    appRendered: false,
     color: 'red'
-  }
-
-  componentDidMount() {
-    if (typeof window !== 'undefined') {
-      require('aframe')
-      require('aframe-particle-system-component')
-      this.setState({ appRendered: true })
-    }
   }
 
   changeColor() {
@@ -26,7 +20,7 @@ export default class AframeWindow extends React.Component {
   render() {
     return (
       <div style={{ height: '100%', width: '100%' }}>
-        {this.state.appRendered && (
+        {this.props.aframeReady && (
           <Scene>
             <a-assets>
               <img

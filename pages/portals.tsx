@@ -6,13 +6,15 @@ import Environment from '../components/xr/scene/environment'
 import Portal from '../components/xr/portal/Portal'
 import Cursor from '../components/xr/portal/Cursor'
 // import Login from '../components/ui/Login'
-
-export default class IndexPage extends React.Component {
+type Props = {
+  aframeReady: boolean,
+}
+export default class PortalsPage extends React.Component<Props> {
   render() {
     return (
       <Layout pageTitle="Portals">
         {/* <Login /> */}
-        <SceneRoot>
+        {this.props.aframeReady && (<SceneRoot>
           <Cursor/>
           <Environment/>
           <Portal href="/" position={{ x: -6, y: 1, z: -5 }}/>
@@ -24,7 +26,7 @@ export default class IndexPage extends React.Component {
             href="https://hubs.mozilla.com/eyUQKmn/welcome-ultimate-festivity"
             position={{ x: 6, y: 1, z: -4 }}/>
             
-        </SceneRoot>
+        </SceneRoot>)}
       </Layout>
     )
   }

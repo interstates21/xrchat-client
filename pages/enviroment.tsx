@@ -3,12 +3,14 @@ import React from 'react'
 
 import dynamic from 'next/dynamic'
 const Scene = dynamic(() => import('../components/xr/scene/scene-environment'), { ssr: false })
-
-export default class IndexPage extends React.Component {
+type Props = {
+  aframeReady: boolean,
+}
+export default class EnvironmentPage extends React.Component<Props> {
   render () {
     return (
       <Layout pageTitle="Environment">
-        <Scene />
+        {this.props.aframeReady && (<Scene />)}
       </Layout>
     )
   }

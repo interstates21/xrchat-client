@@ -2,10 +2,14 @@ import React from 'react'
 import dynamic from 'next/dynamic'
 const Scene = dynamic(() => import('../components/xr/scene/scene-video'), { ssr: false })
 
-export default class IndexPage extends React.Component {
+type Props = {
+  aframeReady: boolean,
+}
+
+export default class Video360Page extends React.Component<Props> {
   render () {
     return (
-      <Scene />
+      this.props.aframeReady && (<Scene />)
     )
   }
 }
