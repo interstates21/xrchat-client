@@ -5,6 +5,8 @@ import Footer from '../Footer'
 import Head from 'next/head'
 import '../../../scss/style.scss' // Global style
 import './style.scss'
+import Alerts from '../Common/Alerts'
+import XDialog from '../Dialog/Dialog'
 
 const { publicRuntimeConfig } = getConfig()
 const siteTitle: string = publicRuntimeConfig.siteTitle
@@ -28,7 +30,11 @@ class Layout extends React.Component<Props> {
         <header>
           <NavMenu />
         </header>
-        {this.props.children}
+        <React.Fragment>
+          <XDialog/>
+          <Alerts/>
+          {this.props.children}
+        </React.Fragment>
         <Footer />
       </section>
     )

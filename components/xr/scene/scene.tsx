@@ -34,17 +34,16 @@ export default class NetworkedScene extends React.Component<Props> {
           renderer="antialias: true"
           background="color: #FAFAFA"
         >
-          <AframeComponentRegisterer/>
-          <Entity position="0 0.6 0">
-            <Grid />
-          </Entity>
-          <Assets />
-          <Player
-            fuseCursor="true" />
-          {this.props.children}
-          <a className="enterVR" id="enterVRButton" href="#">
-            <SvgVr className="enterVR" />
-          </a>
+        <AframeComponentRegisterer/>
+        <Entity position="0 0.6 0">
+          <Grid />
+        </Entity>
+        <Assets />
+        <Player />
+        <Environment />
+        <a className="enterVR" id="enterVRButton" href="#">
+          <SvgVr className="enterVR" />
+        </a>
         </Scene>
       </div>
     )

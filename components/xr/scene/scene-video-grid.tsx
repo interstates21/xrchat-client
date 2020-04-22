@@ -26,20 +26,20 @@ export default class VideoScene extends React.Component<State> {
           background="color: #FAFAFA"
           embedded
         >
-          <Assets />
-          <Grid />
-          <Skybox />
-          <a-plane
+         <Assets />
+         <Grid />
+         <Skybox />
+         <a-plane
             color="#000"
             height="20000"
             width="200000"
             rotation="-90 0 0"
-          ></a-plane>
-          <Entity player="fuseCursor: true" />
-          <a className="enterVR" id="enterVRButton" href="#">
-            <SvgVr className="enterVR" />
-          </a>
-        </Scene>
+         ></a-plane>
+         <Entity player />
+         <a className="enterVR" id="enterVRButton" href="#">
+           <SvgVr className="enterVR" />
+         </a>
+       </Scene>
       </div>
     )
   }
