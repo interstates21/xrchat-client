@@ -18,27 +18,32 @@ const config = getConfig().publicRuntimeConfig.xr.grid
 const playerHeight = getConfig().publicRuntimeConfig.xr.playerHeight
 
 interface VideoProps {
-  videos: any,
+  videos: any
   fetchPublicVideos: typeof fetchPublicVideos
 }
 
 const mapStateToProps = (state: any) => {
   return {
-    videos: selectVideoState(state)
+    videos: selectVideoState(state),
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchPublicVideos: bindActionCreators(fetchPublicVideos, dispatch)
+  fetchPublicVideos: bindActionCreators(fetchPublicVideos, dispatch),
 })
 
-function GridLayout (props: VideoProps): any {
+function GridLayout(props: VideoProps): any {
   const router = useRouter()
-  const cylindricalGrid: CylindricalGrid = new CylindricalGrid(config.gridCellsPerRow, config.cellHeight,
-      config.radius, config.rows, config.columns)
+  const cylindricalGrid: CylindricalGrid = new CylindricalGrid(
+    config.gridCellsPerRow,
+    config.cellHeight,
+    config.radius,
+    config.rows,
+    config.columns
+  )
 
   function gridRotation() {
-    return (180 - (360 / config.gridCellsPerRow) * 2)
+    return 180 - (360 / config.gridCellsPerRow) * 2
   }
 
   function gridOffsetY() {
@@ -46,21 +51,21 @@ function GridLayout (props: VideoProps): any {
     return (1 - config.rows / 2) * config.cellHeight
   }
 
-  function gridCellRotation (itemNum: number) {
+  function gridCellRotation(itemNum: number) {
     const rot = cylindricalGrid.cellRotation(itemNum)
     return `${rot.x} ${rot.y + 180} ${rot.z}`
   }
 
-  function gridCellPosition (itemNum: number) {
+  function gridCellPosition(itemNum: number) {
     const pos = cylindricalGrid.cellPosition(itemNum)
     return `${pos.x} ${pos.y} ${pos.z}`
   }
 
-  function gridRotationString (): string {
+  function gridRotationString(): string {
     return '0 ' + gridRotation() + ' 0'
   }
 
-  function gridOffsetString (): string {
+  function gridOffsetString(): string {
     return '0 ' + (gridOffsetY() + playerHeight) + ' 0'
   }
 
@@ -68,8 +73,10 @@ function GridLayout (props: VideoProps): any {
     router.push('/video360?manifest=' + link + '&title=' + title)
   }
 
-  function getSource(video:any) {
-    return video.thumbnail_url && video.thumbnail_url.length > 0 ? video.thumbnail_url : '#placeholder'
+  function getSource(video: any) {
+    return video.thumbnail_url && video.thumbnail_url.length > 0
+      ? video.thumbnail_url
+      : '#placeholder'
   }
 
   const { videos, fetchPublicVideos } = props
@@ -80,34 +87,35 @@ function GridLayout (props: VideoProps): any {
     }
   })
 
-  return ( <Entity
-          class="grid-cylinder"
-          rotation={gridRotationString()}
-          position={gridOffsetString()}>
-        {videos.get('videos').map(function (video: PublicVideo, i: number) {
-          const cb = function() {
-            followLink(video.link, video.title)
-          }
-          return (
-              <Entity key= {i}
-                      position={ gridCellPosition(i) }
-                      rotation={ gridCellRotation(i) }>
-                <Entity
-                    primitive="a-image"
-                    class='clickable'
-                    src={ getSource(video) }
-                    width={ config.cellWidth }
-                    height={ config.cellContentHeight }
-                    events={{ click: cb } }>
-                </Entity>
-              </Entity>
-          )
-        })}
-      </Entity>
+  return (
+    <Entity
+      class="grid-cylinder"
+      rotation={gridRotationString()}
+      position={gridOffsetString()}
+    >
+      {videos.get('videos').map(function (video: PublicVideo, i: number) {
+        const cb = function () {
+          followLink(video.link, video.title)
+        }
+        return (
+          <Entity
+            key={i}
+            position={gridCellPosition(i)}
+            rotation={gridCellRotation(i)}
+          >
+            <Entity
+              primitive="a-image"
+              class="clickable"
+              src={getSource(video)}
+              width={config.cellWidth}
+              height={config.cellContentHeight}
+              events={{ click: cb }}
+            ></Entity>
+          </Entity>
+        )
+      })}
+    </Entity>
   )
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(GridLayout)
+export default connect(mapStateToProps, mapDispatchToProps)(GridLayout)
