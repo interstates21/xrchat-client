@@ -3,9 +3,7 @@ import DefaultAssets from './assets-default'
 import ServerAssets from './assets-server'
 
 export default class Assets extends React.Component {
-
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
     return (

@@ -6,15 +6,15 @@ const THREE = AFRAME.THREE
 export const ComponentName = 'eaccube'
 
 export interface EaccubeComponentProps {
-  setSrc: (src: HTMLVideoElement | HTMLImageElement) => void,
+  setSrc: (src: HTMLVideoElement | HTMLImageElement) => void
   updateUV: () => void
 }
 
 export interface EaccubeComponentData {
-  src: HTMLVideoElement | HTMLImageElement,
-  tileOrder: string,
-  tileRotation: string,
-  tileFlip: string,
+  src: HTMLVideoElement | HTMLImageElement
+  tileOrder: string
+  tileRotation: string
+  tileFlip: string
   size: number
 }
 
@@ -33,25 +33,29 @@ export const EaccubeComponentSchema: AFRAME.MultiPropertySchema<EaccubeComponent
   tileOrder: {
     type: 'string',
     default: DefaultTileOrder,
-    parse: val => {
+    parse: (val) => {
       if (!TileOrderRegExp.test(val)) {
         throw new Error(TileOrderInvalidMsg)
       }
       return val.toUpperCase()
-    }
+    },
   },
   tileRotation: {
     type: 'string',
     default: DefaultTileRotation,
-    parse: val => {
+    parse: (val) => {
       return val.toUpperCase()
-    }
+    },
   },
   tileFlip: { type: 'string', default: '000000' },
-  size: { type: 'int', default: 1000 }
+  size: { type: 'int', default: 1000 },
 }
 
-function generateEACUV(tileOrder: string[], tileRotation: string[], tileFlip: string[]): number[] {
+function generateEACUV(
+  tileOrder: string[],
+  tileRotation: string[],
+  tileFlip: string[]
+): number[] {
   const cubeFaceCoords: number[][] = []
   const rows = 2
   const cols = 3
@@ -68,32 +72,48 @@ function generateEACUV(tileOrder: string[], tileRotation: string[], tileFlip: st
         THREE.MathUtils.clamp(r / rows, 0, 1),
 
         THREE.MathUtils.clamp((c + 1) / cols, 0, 1),
-        THREE.MathUtils.clamp((r + 1) / rows, 0, 1)
+        THREE.MathUtils.clamp((r + 1) / rows, 0, 1),
       ])
     }
   }
 
   const cubeFaceOrderArray = CubeFaceOrder.split('')
-  const tileIndexOrder = tileOrder.map(faceName => cubeFaceOrderArray.indexOf(faceName))
+  const tileIndexOrder = tileOrder.map((faceName) =>
+    cubeFaceOrderArray.indexOf(faceName)
+  )
 
   const uv: number[] = []
   cubeFaceOrderArray.forEach((_, i) => {
     const cubeFaceIndex = tileIndexOrder[i]
-    const faceCoords = transformFaceCoord(cubeFaceCoords[cubeFaceIndex], tileRotation[i], tileFlip[i])
+    const faceCoords = transformFaceCoord(
+      cubeFaceCoords[cubeFaceIndex],
+      tileRotation[i],
+      tileFlip[i]
+    )
     uv.push(
-      faceCoords[0], faceCoords[1],
-      faceCoords[2], faceCoords[3],
-      faceCoords[6], faceCoords[7],
+      faceCoords[0],
+      faceCoords[1],
+      faceCoords[2],
+      faceCoords[3],
+      faceCoords[6],
+      faceCoords[7],
 
-      faceCoords[2], faceCoords[3],
-      faceCoords[4], faceCoords[5],
-      faceCoords[6], faceCoords[7]
+      faceCoords[2],
+      faceCoords[3],
+      faceCoords[4],
+      faceCoords[5],
+      faceCoords[6],
+      faceCoords[7]
     )
   })
 
   return uv
 }
-function transformFaceCoord(faceCoord: number[], tileRotation: string, tileFlip: string) {
+function transformFaceCoord(
+  faceCoord: number[],
+  tileRotation: string,
+  tileFlip: string
+) {
   // flip first
   if (parseInt(tileFlip)) {
     faceCoord = flipFaceCoord(faceCoord)
@@ -104,10 +124,14 @@ function transformFaceCoord(faceCoord: number[], tileRotation: string, tileFlip:
 }
 function flipFaceCoord(faceCoord: number[]) {
   return [
-    faceCoord[6], faceCoord[7],
-    faceCoord[4], faceCoord[5],
-    faceCoord[2], faceCoord[3],
-    faceCoord[0], faceCoord[1]
+    faceCoord[6],
+    faceCoord[7],
+    faceCoord[4],
+    faceCoord[5],
+    faceCoord[2],
+    faceCoord[3],
+    faceCoord[0],
+    faceCoord[1],
   ]
 }
 function rotateFaceCoord(faceCoord: number[], rotation: string) {
@@ -115,26 +139,38 @@ function rotateFaceCoord(faceCoord: number[], rotation: string) {
     case TILE_ROTATION_LEFT:
       // 90 ccw
       return [
-        faceCoord[6], faceCoord[7],
-        faceCoord[0], faceCoord[1],
-        faceCoord[2], faceCoord[3],
-        faceCoord[4], faceCoord[5]
+        faceCoord[6],
+        faceCoord[7],
+        faceCoord[0],
+        faceCoord[1],
+        faceCoord[2],
+        faceCoord[3],
+        faceCoord[4],
+        faceCoord[5],
       ]
     case TILE_ROTATION_RIGHT:
       // -90 ccw
       return [
-        faceCoord[2], faceCoord[3],
-        faceCoord[4], faceCoord[5],
-        faceCoord[6], faceCoord[7],
-        faceCoord[0], faceCoord[1]
+        faceCoord[2],
+        faceCoord[3],
+        faceCoord[4],
+        faceCoord[5],
+        faceCoord[6],
+        faceCoord[7],
+        faceCoord[0],
+        faceCoord[1],
       ]
     case TILE_ROTATION_DOWN:
       // 180 or -180 ccw
       return [
-        faceCoord[4], faceCoord[5],
-        faceCoord[6], faceCoord[7],
-        faceCoord[0], faceCoord[1],
-        faceCoord[2], faceCoord[3]
+        faceCoord[4],
+        faceCoord[5],
+        faceCoord[6],
+        faceCoord[7],
+        faceCoord[0],
+        faceCoord[1],
+        faceCoord[2],
+        faceCoord[3],
       ]
     default:
       // TILE_ROTATION_UP no rotation
@@ -145,8 +181,7 @@ function rotateFaceCoord(faceCoord: number[], rotation: string) {
 
 export const EaccubeComponent: AFRAME.ComponentDefinition<EaccubeComponentProps> = {
   schema: EaccubeComponentSchema,
-  data: {
-  } as EaccubeComponentData,
+  data: {} as EaccubeComponentData,
 
   init() {
     this.el.setAttribute('geometry', {
@@ -158,7 +193,7 @@ export const EaccubeComponent: AFRAME.ComponentDefinition<EaccubeComponentProps>
       segmentsWidth: 1,
       segmentsHeight: 1,
       segmentsDepth: 1,
-      skipCache: true
+      skipCache: true,
     })
 
     this.el.setAttribute('material', {
@@ -166,7 +201,7 @@ export const EaccubeComponent: AFRAME.ComponentDefinition<EaccubeComponentProps>
       npot: true,
       shader: 'eaccube',
       color: 'white',
-      side: 'back'
+      side: 'back',
     })
 
     this.updateUV()
@@ -181,7 +216,8 @@ export const EaccubeComponent: AFRAME.ComponentDefinition<EaccubeComponentProps>
       this.setSrc(this.data.src)
     }
 
-    const uvNeedsUpdate = this.data.tileOrder !== oldData.tileOrder ||
+    const uvNeedsUpdate =
+      this.data.tileOrder !== oldData.tileOrder ||
       this.data.tileFlip !== oldData.tileFlip ||
       this.data.tileRotation !== oldData.tileRotation
     if (uvNeedsUpdate) {
@@ -191,7 +227,7 @@ export const EaccubeComponent: AFRAME.ComponentDefinition<EaccubeComponentProps>
 
   setSrc(src: HTMLVideoElement | HTMLImageElement) {
     this.el.setAttribute('material', {
-      src
+      src,
     })
   },
 
@@ -199,7 +235,7 @@ export const EaccubeComponent: AFRAME.ComponentDefinition<EaccubeComponentProps>
     const mesh = this.el.getObject3D('mesh') as THREE.Mesh
     const geometry = mesh.geometry as THREE.BufferGeometry
     const uv = geometry.attributes.uv as THREE.BufferAttribute
-    (uv.array as Float32Array).set(
+    ;(uv.array as Float32Array).set(
       generateEACUV(
         this.data.tileOrder.split(''),
         this.data.tileRotation.split(''),
@@ -207,39 +243,40 @@ export const EaccubeComponent: AFRAME.ComponentDefinition<EaccubeComponentProps>
       )
     )
     uv.needsUpdate = true
-  }
+  },
 }
 
 export const EaccubePrimitive: AFRAME.PrimitiveDefinition = {
   defaultComponents: {
-    [ComponentName]: {}
+    [ComponentName]: {},
   },
   mappings: {
     src: ComponentName + '.src',
-    size: ComponentName + '.size'
-  }
+    size: ComponentName + '.size',
+  },
 }
 
 export interface EaccubeShaderData {
   src: HTMLVideoElement | HTMLImageElement
 }
 
-// TODO cleanup type, should be AFRAME.MultiPropertySchema<EaccubeShaderData>: 'is' is mandatory but missing in AFRAME.SinglePropertySchema definition
+// TODO cleanup type, should be AFRAME.MultiPropertySchema<EaccubeShaderData>:
+// 'is' is mandatory but missing in AFRAME.SinglePropertySchema definition
 export const EaccubeShaderSchema: AFRAME.MultiPropertySchema<any> = {
-  src: { type: 'map', is: 'uniform' }
+  src: { type: 'map', is: 'uniform' },
 }
 
 export const EaccubeShader: AFRAME.ShaderDefinition = {
   schema: EaccubeShaderSchema,
   vertexShader,
-  fragmentShader
+  fragmentShader,
 }
 
 const ComponentSystem = {
   name: ComponentName,
   component: EaccubeComponent,
   primitive: EaccubePrimitive,
-  shader: EaccubeShader
+  shader: EaccubeShader,
 }
 
 export default ComponentSystem

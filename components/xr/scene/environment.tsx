@@ -3,18 +3,14 @@ import React from 'react'
 import { Entity } from 'aframe-react'
 import Lights from './lights'
 import Skybox from './skybox'
-
-import getConfig from 'next/config'
-const config = getConfig().publicRuntimeConfig.xr.environment['scene-gltf']
-const gltfsrc = '#' + config.name
+// const gltfsrc = '#' + env['scene-gltf'].src
 export default class Environment extends React.Component {
   render() {
     return (
       <Entity>
-        <a-gltf-model src={gltfsrc}
-          position="0 0 -50"/>
-        <Lights/>
-        <Skybox/>
+        {/* <a-gltf-model src={gltfsrc} position="0 0 -50" /> */}
+        <Lights />
+        <Skybox />
       </Entity>
     )
   }

@@ -1,15 +1,16 @@
-
-import React from 'react'
-// @ts-ignore
 import { Entity } from 'aframe-react'
+import PlayerControls from './controls/player-controls'
+import CameraRig from './camera/camera-rig'
+import Avatar from './avatar/avatar'
 
-function PlayerComp() {
-  const playerProps = ''
+const Player = () => {
   return (
-    <Entity
-      player={ playerProps }
-    />
+    <Entity className="player">
+      <PlayerControls />
+      <CameraRig className="player-camera" />
+      <Avatar />
+    </Entity>
   )
 }
 
-export default PlayerComp
+export default Player

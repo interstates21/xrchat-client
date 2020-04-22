@@ -1,13 +1,13 @@
 import { Entity } from 'aframe-react'
 
 type RaycasterOptions = {
-  autoRefresh: boolean,
+  autoRefresh: boolean
   // direction: Vector3,
-  enabled: boolean,
-  far: number,
-  interval: number,
+  enabled: boolean
+  far: number
+  interval: number
   near: number
-  objects: string | null,
+  objects: string | null
   // origin: Vector3
   showLine: boolean
   useWorldCoordinates: boolean
@@ -22,12 +22,9 @@ export const defaultRaycasterOptions: RaycasterOptions = {
   objects: null,
   // origin: 0, 0, 0,
   showLine: false,
-  useWorldCoordinates: false
+  useWorldCoordinates: false,
 }
 const Raycaster = (props: RaycasterOptions = defaultRaycasterOptions) => {
-  return (<Entity
-    primitive="a-raycaster"
-    {...props}
-    />)
+  return <Entity primitive="a-raycaster" {...props} />
 }
-export default Raycaster;
+export default Raycaster

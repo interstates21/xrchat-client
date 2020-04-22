@@ -3,12 +3,13 @@ import Camera from './camera'
 import FuseCursor from './fuse-cursor'
 
 type Props = {
+  className?: string
   fuseCursor?: boolean
 }
 
-const CameraRig = ({ fuseCursor }: Props) => {
+const CameraRig = ({ className = '', fuseCursor }: Props) => {
   return (
-    <Entity className="camera-rig">
+    <Entity className={'camera-rig ' + className}>
       <Camera />
       {fuseCursor === true && <FuseCursor />}
     </Entity>
