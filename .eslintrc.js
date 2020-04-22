@@ -5,6 +5,8 @@ module.exports = {
   },
   extends: [
     'plugin:react/recommended',
+    "plugin:prettier/recommended",
+    "prettier",
     'standard'
   ],
   globals: {
@@ -21,19 +23,24 @@ module.exports = {
   },
   plugins: [
     'react',
-    '@typescript-eslint'
+    '@typescript-eslint',
+    "prettier"
   ],
   rules: {
     "semi": "error",
+    "max-len": ["error", { "code": 120 }],
+    "comma-dangle": "off",
     "space-before-function-paren":"off",
     "no-unused-expressions":"off",
-    "react/no-unknown-property":"off"
+    "react/no-unknown-property":"off",
+    "react/react-in-jsx-scope": "off", // React is available globally due to Next.js
+    "prettier/prettier": "error"
   },
   overrides: [
     {
       "files": ["enums/*.tsx", "enums/*.ts"],
       "rules": {
-        "no-unused-vars": ["off"]
+        "no-unused-vars": ["off"],
       }
     }
   ]
