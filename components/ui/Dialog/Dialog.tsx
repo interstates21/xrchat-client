@@ -9,11 +9,13 @@ import Typography from '@material-ui/core/Typography';
 import { selectDialogState } from '../../../redux/dialog/selector'
 import { closeDialog } from '../../../redux/dialog/service'
 import { bindActionCreators, Dispatch } from 'redux'
+import { makeStyles, createStyles } from '@material-ui/core/styles'
 import Router from 'next/router'
 import './style.scss'
 
 type Props = {
   dialog: any
+  classes: any
   closeDialog: typeof closeDialog
 }
 
@@ -26,6 +28,27 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeDialog: bindActionCreators(closeDialog, dispatch)
 })
+
+
+const useStyles = makeStyles(( /*theme: Theme*/ ) =>
+  createStyles({
+    dialogTitle: {
+      margin: 0,
+      padding: '10px'
+    },
+    dialogCloseButton: {
+      position: 'absolute',
+      right: '10px',
+      top: '10px',
+      zIndex: 2000
+    },
+  
+    dialogContent: {
+      paddingBottom: '40px'
+    }
+  })
+)
+
 
 class XDialog extends Component<Props> {
   componentDidMount() {
@@ -49,14 +72,14 @@ class XDialog extends Component<Props> {
         onClose={this.handleClose}
         aria-labelledby="xr-dialog"
         >
-        <DialogTitle disableTypography className="dialog-title">
+        <DialogTitle disableTypography className={this.props.classes.dialogTitle}>
           <Typography variant="h6">{(content && content.title) ?? ''}</Typography>
-            <IconButton aria-label="close" className="dialog-close-button" onClick={this.handleClose}>
+            <IconButton aria-label="close" className={this.props.classes.dialogCloseButton} onClick={this.handleClose}>
               <CloseIcon />
             </IconButton>
         </DialogTitle>
 
-        <DialogContent className="dialog-content">
+        <DialogContent className={this.props.classes.dialogContent}>
           {content && content.children}
         </DialogContent>
       </Dialog>
@@ -66,7 +89,8 @@ class XDialog extends Component<Props> {
 
 const DialogWraper = (props: any) => {
   // const router = useRouter()
-  return <XDialog {...props} />
+  const classes = useStyles()
+  return <XDialog {...props} classes={classes}/>
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogWraper)
