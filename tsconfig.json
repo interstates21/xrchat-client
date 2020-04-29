@@ -15,13 +15,14 @@
     "noUnusedParameters": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
+    "strictNullChecks": false,
     "strict": true,
     "target": "esnext",
     "baseUrl": ".",
     "paths": {
-       "utils/*": ["./utils/*"],
+      "utils/*": ["./utils/*"]
     }
   },
   "exclude": ["node_modules"],
-  "include": ["**/*.ts", "**/*.tsx", "next.config.js"],
+  "include": ["**/*.ts", "**/*.tsx", "next.config.js"]
 }

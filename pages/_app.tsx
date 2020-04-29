@@ -33,6 +33,8 @@ class PageLoader extends React.Component<PageLoaderProps> {
     // each page will no longer need to require aframe
     if (typeof window !== 'undefined') {
       require('aframe')
+      require('aframe-particle-system-component')
+      require('aframe-physics-system')
       this.setState({ aframeReady: true })
     }
   }
