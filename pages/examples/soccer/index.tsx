@@ -16,8 +16,6 @@ const Soccer: React.FC<IProps> = () => {
     if (ballRef && camRef) {
       console.log('e', e)
 
-      console.log(camRef.current.el.body)
-
       const ball = ballRef.current as any
       var impulse = new CANNON.Vec3(50, 50, 0)
       var point = new CANNON.Vec3(0, 0, 0)

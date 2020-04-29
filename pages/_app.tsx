@@ -16,6 +16,7 @@ import theme from '../components/assets/theme'
 import { restoreState } from '../redux/persisted.store'
 
 import getConfig from 'next/config'
+
 const config = getConfig().publicRuntimeConfig
 // requires aframe only once and renders the page, passing 'aframeReady' boolean
 type PageLoaderProps = {
@@ -34,6 +35,17 @@ class PageLoader extends React.Component<PageLoaderProps> {
     if (typeof window !== 'undefined') {
       require('aframe')
       require('aframe-particle-system-component')
+      const Ammo = require('ammo.js/builds/ammo.wasm.js')
+      const AmmoWasm = (require('ammo.js/builds/ammo.wasm.wasm')(
+        window as any
+      ).Ammo = Ammo.bind(undefined, {
+        locateFile(path: any) {
+          if (path.endsWith('.wasm')) {
+            return AmmoWasm
+          }
+          return path
+        }
+      }))
       require('aframe-physics-system')
       this.setState({ aframeReady: true })
     }
