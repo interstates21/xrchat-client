@@ -33,7 +33,6 @@ const Kickable: AFRAME.ComponentDefinition<IAttr> = {
     this.sourceEl.addEventListener('mousedown', this.accumulate.bind(this))
     this.sourceEl.addEventListener('mouseup', this.forcePush.bind(this))
   },
-
   play() {},
 
   pause() {},
