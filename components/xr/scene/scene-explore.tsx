@@ -60,20 +60,21 @@ function ExploreScene (props: VideoProps): any {
               <Entity
                 key={i}
                 primitive="a-media-cell"
-                original-title={video.original_title}
-                title={video.title}
+                // original-title={video.original_title}
+                title={video.name}
                 description={video.description}
-                media-link={video.link}
-                thumbnail-url={video.thumbnail_url}
-                production-credit={video.production_credit}
-                rating={video.rating}
-                categories={video.categories}
-                runtime={video.runtime}
-                tags={video.tags}
+                media-url={video.url}
+                thumbnail-url={video.metadata.thumbnail_url}
+                // production-credit={video.production_credit}
+                // rating={video.rating}
+                // categories={video.categories}
+                // runtime={video.runtime}
+                // tags={video.tags}
                 cellHeight={0.6666}
                 cellWidth={1}
                 cellContentHeight={0.5}
                 mediatype="video360"
+                videoformat={video.metadata['360_format']}
               ></Entity>
             )
           })}

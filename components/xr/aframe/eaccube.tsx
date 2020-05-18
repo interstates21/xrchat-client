@@ -20,13 +20,14 @@ export interface EaccubeComponentData {
 
 const TILE_ROTATION_RIGHT = 'R' // 90deg cw
 const TILE_ROTATION_LEFT = 'L' // 90deg ccw
+// @ts-ignore
 const TILE_ROTATION_UP = 'U' // no rotation
 const TILE_ROTATION_DOWN = 'D' // 180deg
 const CubeFaceOrder = 'RLUDFB'
 const TileOrderRegExp = new RegExp(`^[${CubeFaceOrder}]{6}$`, 'i')
 const TileOrderInvalidMsg = 'tileOrder is not valid'
-const DefaultTileOrder = 'RLUDFB'
-const DefaultTileRotation = TILE_ROTATION_UP.repeat(6)
+const DefaultTileOrder = 'FLBDUR'
+const DefaultTileRotation = 'LUDUUU'
 
 export const EaccubeComponentSchema: AFRAME.MultiPropertySchema<EaccubeComponentData> = {
   src: { type: 'asset' },
@@ -173,7 +174,7 @@ export const EaccubeComponent: AFRAME.ComponentDefinition<EaccubeComponentProps>
 
     const mesh = this.el.getObject3D('mesh')
     mesh.scale.x = -1
-    mesh.rotation.y = Math.PI
+    mesh.rotation.y = Math.PI / 2
   },
 
   update(oldData) {

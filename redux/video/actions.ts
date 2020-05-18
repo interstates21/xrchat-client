@@ -1,6 +1,6 @@
 import {
-    VIDEOS_FETCHED_SUCCESS,
-    VIDEOS_FETCHED_ERROR
+  VIDEOS_FETCHED_SUCCESS,
+  VIDEOS_FETCHED_ERROR
 } from '../actions'
 
 export interface PublicVideoState {
@@ -8,18 +8,16 @@ export interface PublicVideoState {
     error: string
 }
 
+export interface VideoMetaData {
+    thumbnail_url?: string,
+    '360_format'?: string
+}
 export interface PublicVideo {
     id: number
-    title: string
-    original_title: string
+    name: string
     description: string
-    link: string,
-    thumbnail_url: string,
-    production_credit: string,
-    rating: string,
-    categories: string,
-    runtime: string,
-    tags: string
+    url: string,
+    metadata: Partial<VideoMetaData>
 }
 
 export interface VideosFetchedAction {
@@ -29,15 +27,15 @@ export interface VideosFetchedAction {
 }
 
 export function videosFetchedSuccess(videos: PublicVideo[]): VideosFetchedAction {
-    return {
-        type: VIDEOS_FETCHED_SUCCESS,
-        videos: videos
-    }
+  return {
+    type: VIDEOS_FETCHED_SUCCESS,
+    videos: videos
+  }
 }
 
 export function videosFetchedError(err: string): VideosFetchedAction {
-    return {
-        type: VIDEOS_FETCHED_ERROR,
-        message: err
-    }
+  return {
+    type: VIDEOS_FETCHED_ERROR,
+    message: err
+  }
 }

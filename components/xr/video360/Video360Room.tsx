@@ -14,22 +14,24 @@ const hlsPlaylistName = 'master.m3u8'
 
 // choose dash or hls
 function getManifestUri(manifestPath: string): string {
-  const manifestName = AFRAME.utils.device.isIOS() ? hlsPlaylistName : dashManifestName
-  return manifestPath + '/' + manifestName
+  return AFRAME.utils.device.isIOS() ? manifestPath.replace(dashManifestName, hlsPlaylistName) : manifestPath
 }
 
 function Video360Room() {
   const router = useRouter()
   const manifest = router.query.manifest as string
   const title = router.query.title as string
-  const runtime = router.query.runtime as string
-  const credit = router.query.credit as string
-  const rating = router.query.rating as string
-  const categories = router.query.categories as string
-  const tags = router.query.tags as string
+  // const runtime = router.query.runtime as string
+  // const credit = router.query.credit as string
+  // const rating = router.query.rating as string
+  // const categories = router.query.categories as string
+  // const tags = router.query.tags as string
+  const format = router.query.videoformat as string
 
-  const text = `${title || ''}\n\n${runtime || ''}\n${credit || ''}\n${'rating: ' + rating}\n${categories || ''}\n${tags || ''}
-    \n(click to play)`
+  const text = `${title || ''}\n\n(click to play)`
+  // \n\n${runtime || ''}\n${credit || ''}\n${'rating: ' + rating}\n${categories || ''}\n${tags || ''}
+
+  const videospherePrimitive = format === 'eac' ? 'a-eaccube' : 'a-videosphere'
   return (
     <Entity>
       <AframeComponentRegisterer/>
@@ -38,18 +40,18 @@ function Video360Room() {
         id="videoPlayerContainer"
       ></Entity>
       <Entity
-        primitive="a-videosphere"
+        primitive={videospherePrimitive}
         class="videosphere"
         src="#video360Shaka"
         loop="false"
       />
       <Entity
-        id="player-vr-ui"
-        player-vr-ui={{}}
+        id="video-player-vr-ui"
+        video-player-vr-ui={{}}
         position={{ x: 0, y: 0.98, z: -0.9 }}
       />
       <VideoControls
-        videosrc="#video360Shaka" videotext="#videotext" videovrui="#player-vr-ui" />
+        videosrc="#video360Shaka" videotext="#videotext" videovrui="#video-player-vr-ui" />
       <Entity id="videotext"
         text={{
           font: 'mozillavr',
