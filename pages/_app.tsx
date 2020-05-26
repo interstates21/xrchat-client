@@ -35,6 +35,7 @@ class PageLoader extends React.Component<PageLoaderProps> {
       require('aframe')
       require('aframe-particle-system-component')
       require('aframe-physics-system')
+      require('aframe-environment-component')
       this.setState({ aframeReady: true })
     }
   }
