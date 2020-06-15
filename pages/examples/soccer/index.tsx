@@ -10,14 +10,34 @@ import RotationLogger from './RotationLogger'
 import * as THREE from '../../../js/three'
 import Env from './Env'
 import Player from './Player'
+import ModifyBallModel from './ModifyBallModel'
 import Ball from './Ball'
+import getConfig from 'next/config'
+const env = getConfig().publicRuntimeConfig.xr.environment
 
+const components = [
+  {
+    name: 'kickable-ball',
+    component: Kickable
+  },
+  {
+    name: 'kickable-ball',
+    component: ZoneIndicator
+  },
+  {
+    name: 'modify-ball-model',
+    component: ModifyBallModel
+  }
+]
 interface IProps {}
 class Soccer extends React.Component<PageLoaderProps> {
   constructor(props) {
     super(props)
-    AFRAME.registerComponent('kickable-ball', Kickable)
-    AFRAME.registerComponent('zone-indicator', ZoneIndicator)
+    components.forEach((e) => {
+      if (!Object.keys(AFRAME.components).find((f) => f === e.name)) {
+        AFRAME.registerComponent(e.name, e.component)
+      }
+    })
   }
 
   render() {
@@ -46,12 +66,12 @@ class Soccer extends React.Component<PageLoaderProps> {
               id="ball-model"
               src="./ball-model/scene.gltf"
             ></a-asset-item> */}
-                <Entity
-      primitive="a-gltf-model"
-      id={env['scene-gltf'].name}
-      src={env['scene-gltf'].src}
-      crossOrigin="anonymous"
-    />
+            <Entity
+              primitive="a-gltf-model"
+              id="ball-model"
+              src={'/gltf/ball/ball.gltf'}
+              crossOrigin="anonymous"
+            />
           </a-assets>
           <Ball />
           <Env />

@@ -12,10 +12,13 @@ const Ball = () => {
         radius="0.5"
         position="0 5 -5"
         color="#fff"
-        gltf-model={{ src: 'ball-model/scene.gltf' }}
+        scale="0.02 0.02 0.02"
+        material="shader: flat; color: red"
+        modify-ball-model
+        gltf-model="#ball-model"
         kickable-ball="distance: 5; amount: 20"
         // material="wireframe: true; emissive: #fff; wireframeLinewidth: 2"
-        dynamic-body="mass: 5; linearDamping: 0.001"
+        dynamic-body="mass: 5; aw: 0.001"
       >
         <a-light
           type="point"
