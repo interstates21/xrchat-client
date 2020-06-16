@@ -8,13 +8,14 @@ const Ball = () => {
     <>
       <Entity
         primitive="a-sphere"
+        ball-manager
         id="ball"
-        radius="0.5"
+        radius="0.4"
         position="0 5 -5"
         color="#fff"
-        scale="0.02 0.02 0.02"
-        material="shader: flat; color: red"
-        modify-ball-model
+        scale="0.4 0.4 0.4"
+        // material="shader: flat; color: red"
+        // modify-ball-model
         gltf-model="#ball-model"
         kickable-ball="distance: 5; amount: 20"
         // material="wireframe: true; emissive: #fff; wireframeLinewidth: 2"

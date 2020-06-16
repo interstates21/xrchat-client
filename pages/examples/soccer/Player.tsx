@@ -15,6 +15,7 @@ const Player = () => {
         primitive="a-camera"
         rotation-reader
         height={3}
+        // position-logger
         width={2}
         id="cam"
       >
@@ -45,7 +46,7 @@ const Player = () => {
             startEvents: 'click',
             from: '0.1 0.1 0.1',
             to: '1 1 1',
-            dur: 150
+            dur: 150,
           }}
         />
       </Entity>

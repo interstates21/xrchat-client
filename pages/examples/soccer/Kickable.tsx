@@ -42,7 +42,7 @@ const Kickable: AFRAME.ComponentDefinition<IAttr> = {
       accumulateZone.object3D.visible = true
     }
     this.accumulationInterval = setInterval(() => {
-      if (this.accumulation < 6) {
+      if (this.accumulation < 3) {
         this.accumulation += 0.1
       }
     }, 50)
